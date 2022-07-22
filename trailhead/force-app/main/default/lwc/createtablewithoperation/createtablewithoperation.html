@@ -1,0 +1,65 @@
+<template>
+    <lightning-card title="Strategic Financial Solutions">
+       <div class="slds-box slds-clearfix slds-box slds-box_small slds-table slds-border_left slds-border_right ">
+        <lightning-datatable  
+        data={fin.data} 
+        columns={cols} 
+        key-field="Id" 
+        onrowselection={grandtotal} 
+        onsave={handleSave}  
+        draft-values={saveDraftValues}  
+        class="slds-table_header-fixed_container slds-table_bordered slds-table_col-bordered slds-border_top ">  
+        </lightning-datatable>  
+
+       <lightning-button  style="margin-top: 2%; "  variant="brand" label="ADD DEBT" class="slds-float_left " 
+        onclick={openModal} ></lightning-button>
+ 
+   <!-- modal start -->        
+  <template if:true={bShowModal}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+         <div class="slds-modal__container">
+            <!-- modal header start -->
+        <header class="slds-modal__header">
+               <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                  <lightning-icon icon-name="utility:close"
+                     alternative-text="close"
+                     variant="inverse"
+                     size="small" ></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+               </button>
+               <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Financial</h2>
+            </header>
+            <!-- modal body start -->
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-record-edit-form object-api-name="Financial__c" >
+
+                <lightning-messages></lightning-messages>
+                <lightning-input-field field-name="Creditor_Name__c"></lightning-input-field>
+                <lightning-input-field field-name="First_Name__c"></lightning-input-field>
+                <lightning-input-field field-name="Last_Name__c"></lightning-input-field>
+                <lightning-input-field field-name="Min_Payment_Percentage__c"></lightning-input-field>
+                <lightning-input-field field-name="Balance__c"></lightning-input-field>
+
+                <div>
+                    <lightning-button style="margin-left: 35%;"  label="Cancle" type="Cancle" onclick={closeModal}></lightning-button>
+                   <lightning-button style="margin-right: 35%;"  label="Save" type="submit" onclick={refreshPage}></lightning-button>
+    
+                </div>
+            </lightning-record-edit-form>
+            </div>
+      
+         </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+   </template>
+
+     <lightning-button  style="margin-top: 2%;  margin-left: 0.5%;" variant="brand" label="REMOVE DEBT" class="slds-float_left" onclick={deleteRecord}></lightning-button>
+      <lightning-button  style="margin-top: 2%;  margin-left: 0.5%;" variant="brand"  label="CHECK ROW COUNT" class="slds-float_left" onclick={getSelectedRow} ></lightning-button>
+      <lightning-tile style=" margin-top:3%; margin-left: 5%; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; " class="slds-float_left">Total Row Count : {countrow.data}</lightning-tile>
+      <lightning-tile style="margin-top: 3%; margin-right: 2%;font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;  " class="slds-float_right" >Total of Balance  : ${balance}</lightning-tile>
+      
+  
+    </div>
+    </lightning-card> 
+  </template>
+  
